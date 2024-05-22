@@ -5,9 +5,9 @@
 Nombre del Proyecto: "Mundos Virtuales para un Aprendizaje Inmersivo y Lúdico: Potenciando la Enseñanza de Anatomía Ósea en Terapia Física con IA”
 Versión del Documento: 1.0.
 Equipo de Desarrollo:
-•	Programador: Josafat Vargas Sánchez.
-•	Diseño: Nelly Carbajal Rincon.
-•	Programador: Julio Cesar Gomez Eligio.
+-	Programador: Josafat Vargas Sánchez.
+-	Diseño: Nelly Carbajal Rincon.
+-	Programador: Julio Cesar Gomez Eligio.
 
 Introducción
 Bienvenido al documento del proyecto ”Mundos Virtuales para un Aprendizaje Inmersivo y Lúdico: Potenciando la Enseñanza de Anatomía Ósea en Terapia Física con IA" de desarrollado en Roblox Studio. Este documento tiene como objetivo tener un registro de toda la información completa sobre el diseño, la implementación y los objetivos del juego. A continuación, encontrarás información esencial para comprender el proyecto y colaborar de manera efectiva.
