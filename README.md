@@ -1,5 +1,7 @@
 # "Aprendizaje Inmersivo y Lúdico en Mundos Virtuales: AI para la Anatomía Ósea en Terapia Física"
 
+<img src="https://1000logos.net/wp-content/uploads/2017/09/Roblox-Logo.png">
+
 Nombre del Proyecto: "Mundos Virtuales para un Aprendizaje Inmersivo y Lúdico: Potenciando la Enseñanza de Anatomía Ósea en Terapia Física con IA”
 Versión del Documento: 1.0.
 Equipo de Desarrollo:
