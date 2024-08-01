@@ -118,20 +118,20 @@ Para añadir funcionalidad personalizada a tu juego en Roblox, es necesario inse
 
 Insertar scripts en el Workspace te permite extender la funcionalidad predeterminada de Roblox, creando experiencias interactivas y personalizadas para los jugadores. Explora las capacidades avanzadas de scripting en la documentación de Roblox para maximizar el potencial de tu proyecto.
 
-### Lenguaje Lua en Roblox Studio
+## Lenguaje Lua en Roblox Studio
 
-#### ¿Qué es el Lenguaje Lua?
+### ¿Qué es el Lenguaje Lua?
 
 Lua es un lenguaje de programación liviano y flexible diseñado para ser embebido en otras aplicaciones. Fue desarrollado en Brasil en la década de 1990 y es conocido por su simplicidad, eficiencia y facilidad de integración con otros lenguajes y sistemas.
 
-#### Características de Lua:
+### Características de Lua:
 
 - **Simplicidad**: Lua tiene una sintaxis simple y clara, lo que facilita su aprendizaje y uso.
 - **Eficiencia**: Es un lenguaje rápido y eficiente, adecuado para aplicaciones que requieren un alto rendimiento.
 - **Flexibilidad**: Lua es muy flexible y puede integrarse fácilmente con otros lenguajes y sistemas.
 - **Ligereza**: Es un lenguaje liviano que consume pocos recursos, ideal para aplicaciones embebidas.
 
-#### ¿Por qué Lua en Roblox Studio?
+### ¿Por qué Lua en Roblox Studio?
 
 Roblox Studio utiliza Lua como su lenguaje de scripting principal debido a varias razones:
 
@@ -157,9 +157,85 @@ end
 game:BindToClose(onGameStart)
 ```
 
-### Conceptos Básicos para Programar en Lua
+## Conceptos Básicos para Programar en Lua
 
-#### Variables y Tipos de Datos
+### ¿Qué es un Script?
+
+Un `Script` en Roblox es un tipo de código que se ejecuta en el servidor y puede afectar a todos los jugadores en un juego. A diferencia de los `LocalScripts`, que solo se ejecutan en el cliente de un jugador específico, los `Scripts` en el servidor pueden realizar tareas globales como gestionar la física del juego, controlar la lógica de los objetos en el mundo, o interactuar con los datos del servidor.
+
+#### ¿Dónde se Colocan los Scripts?
+
+Los `Scripts` deben colocarse en áreas que se ejecuten en el servidor. Algunos de los lugares más comunes para colocar un `Script` incluyen:
+
+- **Workspace**: Permite que el script interactúe directamente con los objetos y modelos en el mundo del juego.
+- **ServerScriptService**: Es un lugar ideal para guardar scripts que no necesitan estar en el `Workspace` y que deben ejecutarse globalmente en el servidor.
+- **ReplicatedStorage**: Ideal para scripts que necesitan ser accesibles tanto desde el servidor como desde el cliente.
+- **Tool**: En un objeto `Tool`, permite que el script controle las herramientas que los jugadores pueden usar.
+
+Al colocar un `Script` en estas ubicaciones, se asegura que el código se ejecute en el servidor y pueda controlar o modificar el entorno del juego para todos los jugadores.
+
+### ¿Qué es un LocalScript?
+
+Un `LocalScript` es un tipo de script en Roblox que se ejecuta en el cliente, es decir, en la computadora o dispositivo del jugador. A diferencia de los scripts normales (Scripts de Servidor), que se ejecutan en el servidor y afectan a todos los jugadores, los `LocalScripts` se ejecutan de manera individual para cada jugador, permitiendo realizar tareas específicas como controlar la cámara, manejar la interfaz de usuario (GUI) o escuchar eventos de entrada del jugador, como movimientos del ratón o pulsaciones de teclas.
+
+#### ¿Dónde se Colocan los LocalScripts?
+
+Los `LocalScripts` deben colocarse en áreas que se replican al cliente, lo que significa que solo funcionarán si están ubicados en las siguientes ubicaciones:
+
+- **StarterPlayerScripts**: Se ejecutan automáticamente cuando el jugador entra en el juego.
+- **StarterCharacterScripts**: Se ejecutan cuando el personaje del jugador se genera.
+- **StarterGui**: Se utilizan para manejar elementos de la interfaz de usuario.
+- **PlayerGui**: Se ejecutan en la GUI de un jugador específico.
+- **Backpack**: Se colocan en la mochila del jugador y pueden ejecutarse cuando se selecciona una herramienta.
+
+Estas ubicaciones aseguran que el `LocalScript` se ejecute correctamente en el cliente y pueda interactuar con las funciones específicas de ese jugador.
+
+### Diferencias entre un Script y un LocalScript
+
+En Roblox, los `Scripts` y los `LocalScripts` son dos tipos de scripts utilizados para diferentes propósitos. A continuación se detallan las principales diferencias entre ellos:
+
+#### 1. **Ubicación de Ejecución**
+
+- **Script**: 
+  - Se ejecuta en el servidor.
+  - Afecta a todos los jugadores del juego.
+  - Se coloca en ubicaciones como `Workspace`, `ServerScriptService`, o `ReplicatedStorage`.
+
+- **LocalScript**:
+  - Se ejecuta en el cliente, es decir, en la máquina de cada jugador individualmente.
+  - Afecta solo al jugador específico que lo está ejecutando.
+  - Se coloca en ubicaciones como `StarterPlayerScripts`, `StarterCharacterScripts`, `StarterGui`, `PlayerGui`, o `Backpack`.
+
+#### 2. **Acceso a Datos**
+
+- **Script**:
+  - Puede acceder y modificar cualquier dato del servidor.
+  - Ideal para lógica global del juego, como manejo de datos de todos los jugadores, cambios en el entorno del juego, etc.
+
+- **LocalScript**:
+  - Solo puede acceder a datos que están disponibles en el cliente, como la interfaz de usuario, la cámara, y los controles del jugador.
+  - Ideal para tareas que requieren interacción directa con el jugador, como manipulación de la cámara o respuesta a la entrada del usuario.
+
+#### 3. **Seguridad y Privacidad**
+
+- **Script**:
+  - Es más seguro ya que se ejecuta en el servidor, lo que lo hace menos susceptible a ser manipulado por jugadores.
+  - Usado para manejar lógica crítica que no debe ser alterada por los usuarios.
+
+- **LocalScript**:
+  - Menos seguro ya que se ejecuta en el cliente y podría ser manipulado por jugadores con malas intenciones.
+  - Usado principalmente para funcionalidades que requieren personalización o respuesta rápida en el cliente.
+
+#### 4. **Aplicaciones Comunes**
+
+- **Script**:
+  - Usado para manejar la física del juego, procesar eventos globales, interactuar con la base de datos, etc.
+
+- **LocalScript**:
+  - Usado para controlar la interfaz de usuario, manipular la cámara, escuchar eventos de entrada del jugador, etc.
+
+
+### Variables y Tipos de Datos
 
 En Lua, las variables se pueden declarar sin necesidad de especificar el tipo de datos, ya que es un lenguaje de tipado dinámico. Es recomendable usar `local` para declarar variables, ya que esto limita su alcance al bloque donde se definen, evitando conflictos de nombres y errores en el código.
 
@@ -169,7 +245,7 @@ local texto = "Hola Mundo" -- Cadena de texto
 local booleano = true      -- Booleano
 ```
 
-#### Operadores 
+### Operadores 
 
 Lua admite operadores aritméticos para cálculos matemáticos `(suma, resta, multiplicación, división, módulo y exponenciación)` y operadores de comparación para evaluar igualdades y desigualdades. También tiene operadores lógicos (`and`, `or`, `not`) para combinar o invertir condiciones y un operador de concatenación (`..`) para unir cadenas de texto. La precedencia de operadores en Lua determina el orden en que se evalúan las expresiones.
 
@@ -192,7 +268,7 @@ local o = (true or false)    -- true
 local no = not true          -- false
 ```
 
-#### Estructuras de Control
+### Estructuras de Control
 
 Lua ofrece diversas estructuras de control para gestionar el flujo de ejecución del programa. Estas incluyen `if`, `else` y `elseif` para ejecutar bloques de código basados en condiciones; `for` para bucles con un número específico de iteraciones; `while` para bucles que se ejecutan mientras una condición sea verdadera; y `repeat` para bucles que se ejecutan al menos una vez y continúan hasta que una condición sea falsa.
 ```Lua
@@ -225,7 +301,7 @@ until contador2 > 5
 
 ```
 
-#### Funciones
+### Funciones
 
 En Lua, las funciones se definen con la palabra clave `function`, seguida del nombre de la función y sus parámetros entre paréntesis. Pueden devolver valores usando `return`. Las funciones pueden ser locales o globales, permitiendo modularidad y reutilización de código. Se invocan usando su nombre seguido de paréntesis y argumentos.
 
@@ -239,7 +315,7 @@ end
 saludar("Mundo")  -- Imprime: Hola, Mundo
 ```
 
-#### Manejo de Errores
+### Manejo de Errores
 
 Lua ofrece mecanismos como `pcall` y `xpcall` para manejar errores de manera efectiva. `pcall` intenta llamar a una función y captura cualquier error, devolviendo `true` si tiene éxito o `false` y el mensaje de error si falla. `xpcall` permite un manejo más avanzado de errores al especificar una función manejadora de errores personalizada. Estos métodos son cruciales para gestionar excepciones y mantener la estabilidad del programa al enfrentar condiciones inesperadas durante la ejecución del código Lua.
 
@@ -254,7 +330,7 @@ if not status then
 end
 ```
 
-#### Comentarios
+### Comentarios
 
 En Lua, los comentarios de una línea se crean con `--`, mientras que los comentarios de varias líneas se delimitan con `--[[` y `]]`. Estos comentarios son útiles para documentar el código, explicar su funcionalidad y hacer anotaciones que ayuden a otros desarrolladores a entender el propósito y la lógica detrás de cada parte del programa.
 
@@ -266,14 +342,72 @@ En Lua, los comentarios de una línea se crean con `--`, mientras que los coment
     de varias líneas
 ]]
 ```
-## Arquitectura del Proyecto
-**Descripción general de la estructura del juego**
 
-Diseño del Juego
-Mecánicas del Juego:
-(Selección)SS
-Personajes:
-(Selección)
-Mundo del Juego:
-(Selección)
+### Del Padre e Hijo en Roblox Studio
+
+En Roblox Studio, los objetos en el entorno de juego están organizados jerárquicamente con una relación de padre e hijo. Esta estructura es fundamental para la organización y la interacción entre los elementos del juego.
+
+- **Padre**: Es un objeto que contiene a otros objetos (hijos). Puedes imaginarlo como un contenedor que agrupa funcionalidades o elementos relacionados.
+  
+- **Hijo**: Es un objeto contenido dentro de otro objeto (padre). Los hijos heredan propiedades y comportamientos del padre y pueden ser manipulados y accedidos a través de él.
+
+Esta relación padre e hijo es esencial para construir y gestionar la estructura y la lógica de tu juego en Roblox Studio. Al trabajar con scripts en Lua, es común interactuar con estos objetos utilizando métodos y propiedades que permiten acceder y manipular sus características dentro del entorno de juego.
+
+#### Ejemplo de Declaración de Padre e Hijo
+
+En este ejemplo, creamos un nuevo objeto de tipo `Part` como hijo de un objeto `Model`, que actúa como el padre:
+
+```lua
+-- Crear un nuevo Modelo (padre)
+local modelo = Instance.new("Model")
+modelo.Name = "MiModelo"
+
+-- Crear un objeto Part (hijo)
+local parte = Instance.new("Part")
+parte.Name = "MiParte"
+
+-- Establecer la parte como hijo del modelo
+parte.Parent = modelo
+
+-- Acceder a propiedades del hijo a través del padre
+print(modelo.MiParte.Name)  -- Imprime: MiParte
+```
+
+### Acceder a las Propiedades del Workspace y de sus Objetos con un Script
+
+En Roblox Studio, el `Workspace` es el contenedor principal que alberga todos los objetos del mundo del juego. A menudo, es necesario acceder y modificar las propiedades del `Workspace` y de los objetos que contiene mediante scripts.
+
+#### Acceder al Workspace
+
+Para acceder al `Workspace`, puedes usar la referencia global `game.Workspace`. Desde allí, puedes acceder a sus propiedades y a los objetos que contiene.
+
+#### Ejemplo de Acceso y Modificación de Propiedades
+
+En este ejemplo, accederemos al `Workspace` y modificaremos algunas propiedades de un objeto `Part` dentro de él.
+
+1. **Crear una Parte en el Workspace**:
+    - Abre Roblox Studio.
+    - Inserta una nueva parte (`Part`) en el `Workspace`.
+
+2. **Añadir un Script a la Parte**:
+    - Selecciona la parte que creaste.
+    - Haz clic derecho en la parte y selecciona `Insertar Objeto`.
+    - Escoge `Script` del menú.
+    - Copia y pega el siguiente código en el script:
+
+```lua
+-- Acceder al Workspace
+local workspace = game.Workspace
+
+-- Acceder a una parte específica dentro del Workspace
+local parte = workspace:WaitForChild("Part")
+
+-- Modificar las propiedades de la parte
+parte.BrickColor = BrickColor.new("Bright red") -- Cambiar el color de la parte a rojo brillante
+parte.Size = Vector3.new(10, 1, 10) -- Cambiar el tamaño de la parte
+parte.Position = Vector3.new(0, 5, 0) -- Mover la parte a una nueva posición
+
+-- Acceder y modificar una propiedad del Workspace
+workspace.Gravity = 50 -- Cambiar la gravedad del mundo del juego
+```
 
