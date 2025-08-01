@@ -406,7 +406,7 @@ local parte = workspace:WaitForChild("Part")
 parte.BrickColor = BrickColor.new("Bright red") -- Cambiar el color de la parte a rojo brillante
 parte.Size = Vector3.new(10, 1, 10) -- Cambiar el tamaño de la parte
 parte.Position = Vector3.new(0, 5, 0) -- Mover la parte a una nueva posición
-
+```
 -- Acceder y modificar una propiedad del Workspace
 workspace.Gravity = 50 -- Cambiar la gravedad del mundo del juego
 ```
