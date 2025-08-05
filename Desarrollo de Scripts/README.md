@@ -1,5 +1,59 @@
 # Desarrollo de Scripts
 
+## Creación de Menú Principal (GUI) 
+
+El menú principal representa la pantalla inicial de navegación del entorno virtual desarrollado en Roblox Studio. Este menú no solo actúa como punto de entrada a la experiencia educativa, sino que también permite el acceso a secciones complementarias como los créditos y los ajustes del sistema.
+La imagen corresponde a la pantalla de inicio o menú principal de la experiencia educativa desarrollada en el entorno virtual de Roblox Studio, diseñada para estudiantes de fisioterapia dentro del proyecto académico de anatomía ósea
+Esta pantalla cumple la función de ser el punto de entrada a la simulación, permitiendo al usuario elegir entre comenzar la experiencia, acceder a los ajustes o visualizar los créditos del proyecto
+Su diseño fue concebido con un enfoque visual claro, funcional y amigable para el usuario, siguiendo criterios de accesibilidad e identidad institucional
+
+![](../Imagenes/Figura_6_Interfaz del_menú_principal.png)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## Crear un ProximityPrompt para Teletransportar al Jugador
 
 ### ¿Qué es un ProximityPrompt?
@@ -23,7 +77,7 @@ Un `ProximityPrompt` es una interfaz interactiva en Roblox que permite a los jug
     - Selecciona el `ProximityPrompt` que añadiste a la parte.
     - En la ventana de `Propiedades`, ajusta las configuraciones como `ActionText` (el texto que se mostrará), `ObjectText`, `HoldDuration`, entre otros.
 
-    ![](../Imagenes/Propiedades_proximity.png)
+    ![](../Imagenes/Propiedades_Proximity_Craneo.png)
 
 4. **Añadir el Script**:
     - Añade un `Script` a la misma parte que contiene el `ProximityPrompt`.
@@ -109,7 +163,7 @@ Este código se utiliza en un `LocalScript` que se encuentra dentro de un TextBu
 
 ### Carpeta StarterGui:
 - **ScreenGui**: Un contenedor de elementos GUI que aparece en la pantalla del jugador.
-- **Frame**: Un marco dentro del `ScreenGui` que contiene otros elementos GUI.
+- **Frame**: Un contenedor visual dentro de la interfaz que se usa para agrupar otros elementos de GUI.
 - **Frame "Controles"**: Un marco adicional dentro del `Frame` principal.
 - **TextButton "Exit"**: Un botón de texto dentro del `Frame` principal.
 
@@ -127,7 +181,35 @@ Este código se utiliza en un `LocalScript` que se encuentra dentro de un TextBu
 ### Descripción General
 
 El propósito de este script es teletransportar al jugador a una posición específica en el juego, restaurar la cámara a su estado original y ocultar los controles en la interfaz de usuario (UI). Además, restaura las posiciones originales de varios modelos en el juego.
+´´´Lua
+local exit = game.Workspace:WaitForChild("ExitCraneo")
+local cam = game.Workspace.Camera
+local player = game.Players.LocalPlayer
+local humanoid = player.Character
+local humanoidRootPart = humanoid:WaitForChild("HumanoidRootPart")
+local playerGui = player:WaitForChild("PlayerGui")
+local frame = playerGui:WaitForChild("ScreenGui"):WaitForChild("Frame")
 
+local initialCFrames = {}
+local heads = { workspace.Head1, workspace.Head2, workspace.Head3 } -- Ejemplo de partes a restaurar
+
+-- Guardar posiciones originales
+for i, head in pairs(heads) do
+    initialCFrames[i] = head.CFrame
+end
+
+-- Evento al hacer clic en el botón "Exit"
+script.Parent.MouseButton1Click:Connect(function()
+    humanoidRootPart.CFrame = CFrame.new(exit.Position) + Vector3.new(0, 5, 0)
+    cam.CameraType = Enum.CameraType.Custom
+    frame.Controles.Visible = false
+
+    -- Restaurar posiciones originales
+    for i, head in pairs(heads) do
+        head.CFrame = initialCFrames[i]
+    end
+end)
+´´´
 ### Estructura del Código
 
 1. Definición de Variables y Referencias
@@ -155,16 +237,96 @@ El propósito de este script es teletransportar al jugador a una posición espec
     |`humanoidRootPart.CFrame = CFrame.new(exit.Position) + Vector3.new(0, 5, 0)`| Teletransporta al jugador a la posición de ExitCraneo, ajustando la altura.|
     |`cam.CameraType = Enum.CameraType.Custom`| Restaura la cámara a su tipo predeterminado (Custom), devolviendo el control al jugador.|
     |`frame.Controles.Visible = false`| Oculta el Frame de controles en la UI.|
-
-    - `Restauración de las Posiciones Originales:` Se recorre la lista de heads y se restauran las posiciones originales (CFrames) utilizando los valores almacenados en initialCFrames.
+    |`Restauración de las Posiciones Originales:`| Se recorre la lista de heads y se restauran las posiciones originales (CFrames) utilizando los valores almacenados en initialCFrames.|
 
 ## Controles del Modelo
 
 Los botones están organizados de manera que los controles de dirección (`Right`, `Left`, `Top`, `Bottom`) están agrupados juntos para facilitar la navegación de la cámara.
 
+
+### Carpeta StarterGui:
+
+![imagen](../Imagenes/Componentes_textbutton.png)
+
+
+- **Frame "Controles"**: Un marco adicional dentro del `Frame` principal.
+- **TextButton "Right"**: Mueve la vista de la cámara hacia la derecha para observar el modelo desde ese ángulo.
+- **TextButton "Left"**: Mueve la vista de la cámara hacia la izquierda para observar el modelo desde ese ángulo.
+- **TextButton "Top"**: Mueve la vista de la cámara hacia arriba para observar el modelo desde ese ángulo.
+- **TextButton "Bottom"**: Mueve la vista de la cámara hacia abajo para observar el modelo desde ese ángulo.
+
+### Elementos
+
+|Elemento|Descripción|
 |-|-|
+|`UICorner:`| Redondea las esquinas del botón.|
+|`LocalSCript(Craneo):`| Script local que maneja la lógica de salir de la vista del Cráneo.|
+|`ImageLabel:`| Muestra una imagen en la pantalla como parte de la interfaz gráfica.|
+
+### 
+
+
+Código del Script Local
+
+```Lua
+local player = game.Players.LocalPlayer
+local character = player.Character or player.CharacterAdded:Wait()
+local head = game.Workspace:WaitForChild("Head")
+local runService = game:GetService("RunService")
+
+local UserInputService = game:GetService("UserInputService")
+
+local isHolding = false
+
+local function printRepeatedly()
+	while isHolding do
+		head.CFrame = head.CFrame * CFrame.Angles(math.rad(2), 0, 0)
+		wait()
+	end
+end
+
+-- Evento cuando se presiona el botón
+script.Parent.MouseButton1Down:Connect(function()
+	isHolding = true
+	printRepeatedly()
+end)
+
+-- Evento cuando se suelta el botón
+script.Parent.MouseButton1Up:Connect(function()
+	isHolding = false
+end)
+
+-- Evento cuando el ratón sale del área del botón
+script.Parent.MouseLeave:Connect(function()
+	isHolding = false
+end)
+
+-- Evento cuando el ratón entra en el área del botón
+script.Parent.MouseEnter:Connect(function()
+	if isHolding then
+		printRepeatedly()
+	end
+end)
+```
+### Estructura del Código
+
+|Codigo|Explicación|
 |-|-|
-|Botón `Right`| Mueve la vista de la cámara hacia la derecha para observar el modelo desde ese ángulo.|
-|Botón `Left`| Mueve la vista de la cámara hacia la izquierda para observar el modelo desde ese ángulo.|
-|Botón `Top`| Mueve la vista de la cámara hacia arriba para observar el modelo desde ese ángulo.|
-|Botón `Bottom`| Mueve la vista de la cámara hacia abajo para observar el modelo desde ese ángulo.|
+|`local player = game.Players.LocalPlayer`| Obtiene la referencia del jugador local `(LocalPlayer)` y su personaje `(Character)`.|
+`local character = player.Character or player.CharacterAdded:Wait()`| Si el personaje no está disponible, espera a que sea añadido al juego con `CharacterAdded:Wait()`.|
+|`local head = game.Workspace:WaitForChild("Head")`| Busca el objeto "Head" en el `Workspac`e (el entorno 3D principal en Roblox). Utiliza `WaitForChild` para asegurarse de que el objeto exista antes de seguir adelante.|
+|`local runService = game:GetService("RunService")`| RunService permite ejecutar código cada frame o en ciertos eventos del juego.|
+|`local isHolding = false`| Declara una variable booleana llamada `isHolding` que indicará si el botón está siendo presionado.|
+|`local function printRepeatedly()
+	while isHolding do
+		head.CFrame = head.CFrame * CFrame.Angles(math.rad(2), 0, 0)
+		wait()
+	end
+end`|
+
+
+Define una función local printRepeatedly que rota el "Head" del personaje usando CFrame.Angles.|
+
+
+
+
